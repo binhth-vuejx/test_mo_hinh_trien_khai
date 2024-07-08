@@ -1,0 +1,42 @@
+version: '3.8'
+
+networks:
+  vuejx_network:
+    name: vuejx_network
+    driver: bridge
+    external: true
+volumes:
+  minio_data:
+    driver: local
+    
+services:
+  rust:
+    build:
+      context: ./rust-grpc
+      dockerfile: Dockerfile
+    image: rust:1.0
+    restart: always
+    container_name: rust
+    environment:
+      SERVICE_NAME: rust
+    volumes:
+      - ./rust-grpc:/shared:z
+    networks:
+      - vuejx_network
+    ports:
+      - "50051:50051"
+      
+  bun_server:
+    build:
+      context: ./bun-server
+      dockerfile: Dockerfile
+    image: bun_server:1.0
+    restart: always
+    container_name: bun_server
+    environment:
+      SERVICE_NAME: bun_server
+    networks:
+      - vuejx_network
+    ports:
+      - "50031:50031"
+        

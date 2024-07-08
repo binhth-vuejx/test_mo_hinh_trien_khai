@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package helloworld;
+message Empty {}
+
+service Greeter {
+  rpc Body1Kb (Empty) returns (HelloReply) {};
+  rpc Body10Kb (Empty) returns (HelloReply) {};
+  rpc Body100Kb (Empty) returns (HelloReply) {};
+  rpc Body1Mb (Empty) returns (HelloReply) {};
+  rpc Body5Mb (Empty) returns (HelloReply) {};
+  rpc Body10Mb (Empty) returns (HelloReply) {};
+}
+
+message HelloReply {
+  string message = 1;
+}
